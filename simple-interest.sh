@@ -1,9 +1,19 @@
 #!/bin/bash
+
 echo "Enter principal amount:"
-read p
+read principal
 echo "Enter rate of interest:"
-read r
-echo "Enter time period:"
-read t
-si=$(echo "$p * $r * $t / 100" | bc)
+read rate
+echo "Enter time period (in years):"
+read time
+
+# Input validation
+if ! [[ "$principal" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
+   ! [[ "$rate" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
+   ! [[ "$time" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+  echo "Error: Please enter valid numeric values."
+  exit 1
+fi
+
+si=$(echo "$principal * $rate * $time / 100" | bc)
 echo "Simple Interest = $si"
